@@ -1,107 +1,209 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>GIFs!</title>
-  <link rel="stylesheet" href="css/bootstrap.css">
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <title>GIFs!</title>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">       
+        <link rel="stylesheet" href="css/main.css">
+    </head>
 
-<body>
-  <div class="container">
-   
-<!--
-    <nav>
-      <ul>
-        <li><a href="">1</a></li>
-        <li><a href="">2</a></li>
-        <li><a href="">3</a></li>
-      </ul>
-    </nav> 
+    <body>
+        <!--  Full-width Navigation -->
+        <nav class="navbar navbar-default navbar-fixed-top" id="topNav">
+            <div class="container-fluid">
+                <a href="index.html" class="navbar-brand">
+                    GIF for Yo!
+                </a>
+<!-- Deleted to have a cleaner interface
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="">1</a></li>
+                    <li><a href="">2</a></li>
+                    <li><a href="">3</a></li>
+                </ul>
 -->
+            </div>
+        </nav>
+
+        <!-- Main Content Container -->
+        <div class="container" id="mainContainer">
+
+            <!--  Title Row  -->
+<!--       Deleted for a cleaner interface
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1>1</h1>
+                    <p>Title for gif number</p>
+                </div>
+            </div>
+-->
+            
+            <!-- Content (Where GIF is) Row  -->
+            <div class="row well">
+                <!--gif-->
+                <div class="col-sm-7">
+                    <div class="thumbnail" id="gif">
+                    <!--     jQuery is going to append GIFs here       -->
+                    </div>
+                </div>
+                <!--comments-->
+                <div class="col-sm-5">
+                    <h3>
+                        Funniest Comment
+                    </h3>
+                    <p>"What the..."</p>
+                </div>
+            </div>
 
 
-    <div class="row">
-      <div class="col-sm-12">
-        <h1>Greatest GIFs of the week! (heading 1)</h1>
-        <p>description for heading 1</p>
-      </div>
-    </div>
 
-    <div class="row">
-     
-      <div class="col-sm-7">
-        <div class="thumbnail">
-          <img src="http://giant.gfycat.com/IckyRequiredBillygoat.gif" alt="">
+            <div class="row">
+
+                <div class="col-sm-4 col-xs-6">
+                    <button type="button" class="btn btn-info" id="moar-button">MOAR!</button>
+                    <input type="button" value="Like">   
+                    <input type="button" value="Neutral">
+                    <input type="button" value="Dislike">
+                    
+                </div>
+
+                <div class="col-sm-4 col-xs-6">
+                    <h3>
+                        Source
+                    </h3>
+                    <p><a href="http://www.reddit.com/">Reddit</a></p>
+                </div>
+
+                <div class="col-sm-4 col-xs-12  col-sm-offset-0">
+                    <h3>
+                        Lorem ipsum dolor sit amet, consectetur----
+                    </h3>
+                    <p>description for heading 3</p>
+                </div>
+
+            </div>    
+
+
+
+            <div class="footer">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <p>
+                                Curated by Vincent Jo
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
-      </div>
-         
-      <div class="col-sm-5">
-        <h2>
-          Title of GIF here
-        </h2>
-        <p>Short description for GIF</p>
-        <input type="button" value="Like">   
-        <input type="button" value="Neutral">
-        <input type="button" value="Dislike">
-      </div>
+
+        <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha256-Sk3nkD6mLTMOF0EOpNtsIry+s1CsaqQC1rVLTAy+0yc= sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+        
+        <script>
+            /*
+                    This JS file pulls data from Imgur API and appends information onto index.HTML
+            */
+            
+            // http://stackoverflow.com/questions/962802#962890
+
+            //put into array [1,2,3,4,...so on until the last number]
+            for (var arr_order_of_gifs=[],i=0;i<60;i++) {
+                arr_order_of_gifs[i]=i;
+            }
+
+            function shuffle(array) {
+                var tmp, 
+                    current, 
+                    top = array.length;
+
+                if(top) {
+
+                    while(--top) {
+                        current = Math.floor(Math.random() * (top + 1));
+                        tmp = array[current];
+                        array[current] = array[top];
+                        array[top] = tmp;
+                    }
+
+                }
+                return array;
+            }
+
+            arr_order_of_gifs = shuffle(arr_order_of_gifs);
+            
+            
+            data_results = {};
+            
+            var clientId = "4784e8f3cbbc8cf";
+            var auth="Client-ID " + clientId;
+            
+            $.ajax({
+                url: 'https://api.imgur.com/3/gallery/r/gifs/top/week',
+                type: 'GET',
+                headers: {
+                    Authorization: auth,
+                },
+                success: function(results) { append_gif(results); console.log(results);}
+            });
       
-    </div>
-    
-    
+            
+            var append_gif = function(results) {
+//                $('#gif').append($('<video class="center-block" id="mp4-video" autoplay><source src="' + results["data"]["15"]["mp4"] + '" type="video/mp4"></video>'));
+//                $('#gif').append($('<img>').attr('src', results["data"]["12"]["link"]));
+                /* 
+                
+                Responsive MP4 idea from StackOverflow : http://stackoverflow.com/questions/26040136/bootstrap-3-responsive-mp4-video 
+                
+                Math.random idea from: http://stackoverflow.com/questions/1527803/generating-random-numbers-in-javascript-in-a-specific-range
+                
+                */
+                
+                //check if the mp4 key exists in the data. Some gifs don't have a mp4 available. Delete all the values in the array that doesn't have a mp4 data.
+                while (!("mp4" in results["data"][arr_order_of_gifs[0]])) {
+                    arr_order_of_gifs.shift();
+                } 
+               
+                console.log(arr_order_of_gifs);
+                $('#gif').html($('<div align="center" class="embed-responsive embed-responsive-16by9"><video class="center-block embed-responsive-item" id="mp4-video" autoplay loop><source src="' + results["data"][arr_order_of_gifs.shift()]["mp4"] + '" type="video/mp4"></video></div>'));  
+                    
+                
+            }
+            
+            //on click, load more, but only load ones that haven't been played.
+            $('#moar-button').click(function(event) {
+                
+                event.preventDefault();
+                
+                if (arr_order_of_gifs.length === 0) {
+                    $('#gif').text('You watched all the GIFs!');
+                } else {
+                    $.ajax({
+                        url: 'https://api.imgur.com/3/gallery/r/gifs/top/week',
+                        type: 'GET',
+                        headers: {
+                            Authorization: auth,
+                        },
+                        success: function(results) { append_gif(results); console.log(results);},
+             
+                    });
+                }
+                
+            });
+            
+            
+            
+        
+          
+            
+            
+            
+            
+            
+        </script>
 
-    <div class="row">
-     
-      <div class="col-sm-4 col-xs-6">
-        <h3>
-          Source
-        </h3>
-        <p><a href="http://www.reddit.com/">Reddit</a></p>
-      </div>
-      
-      <div class="col-sm-4 col-xs-6">
-        <h3>
-          Funniest Comment
-        </h3>
-        <p>"What the..."</p>
-      </div>
-      
-      <div class="col-sm-4 col-xs-12  col-sm-offset-0">
-        <h3>
-          Lorem ipsum dolor sit amet, consectetur----
-        </h3>
-        <p>description for heading 3</p>
-      </div>
-      
-    </div>    
-
-   
-    
-    <div class="footer">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-12">
-            <p>
-              Curated by Vincent Jo
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    
-    
-
-    
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-
-    <script src="js/bootstrap.js"></script>
-    
-    
-  </div>
-  
-  
-    
-</body>
+    </body>
 
 </html>
