@@ -12,7 +12,7 @@
         <nav class="navbar navbar-default navbar-fixed-top" id="topNav">
             <div class="container-fluid">
                 <a href="index.html" class="navbar-brand">
-                    GIF for Yo!
+                    GIF - TV
                 </a>
 <!-- Deleted to have a cleaner interface
                 <ul class="nav navbar-nav navbar-right">
@@ -59,6 +59,7 @@
             <div class="row">
 
                 <div class="col-sm-4 col-xs-6">
+                    <button type="button" class="btn btn-primary" id="back-button">BACK!</button>
                     <button type="button" class="btn btn-info" id="moar-button">MOAR!</button>
                     <input type="button" value="Like">   
                     <input type="button" value="Neutral">
@@ -110,6 +111,11 @@
             // http://stackoverflow.com/questions/962802#962890
 
             //put into array [1,2,3,4,...so on until the last number]
+            
+            
+            /*
+            
+            
             for (var arr_order_of_gifs=[],i=0;i<60;i++) {
                 arr_order_of_gifs[i]=i;
             }
@@ -153,13 +159,14 @@
             var append_gif = function(results) {
 //                $('#gif').append($('<video class="center-block" id="mp4-video" autoplay><source src="' + results["data"]["15"]["mp4"] + '" type="video/mp4"></video>'));
 //                $('#gif').append($('<img>').attr('src', results["data"]["12"]["link"]));
-                /* 
+               
+               
                 
-                Responsive MP4 idea from StackOverflow : http://stackoverflow.com/questions/26040136/bootstrap-3-responsive-mp4-video 
+                //Responsive MP4 idea from StackOverflow : http://stackoverflow.com/questions/26040136/bootstrap-3-responsive-mp4-video 
                 
-                Math.random idea from: http://stackoverflow.com/questions/1527803/generating-random-numbers-in-javascript-in-a-specific-range
+                //Math.random idea from: http://stackoverflow.com/questions/1527803/generating-random-numbers-in-javascript-in-a-specific-range
                 
-                */
+                
                 
                 //check if the mp4 key exists in the data. Some gifs don't have a mp4 available. Delete all the values in the array that doesn't have a mp4 data.
                 while (!("mp4" in results["data"][arr_order_of_gifs[0]])) {
@@ -193,14 +200,98 @@
                 
             });
             
+            */
             
             
-        
+            
+            var order_arr = [1];
+            var current_gif_number = 0;
+            var historical_obj_of_gif_posts = [];
+            
+            var post_gifs = {
+                url: 'https://api.imgur.com/3/gallery/r/gifs/',
+                max_post: 40,
+                initialize: function(hot_top_user, day_week_month_year_all) {
+                    this.url += hot_top_user + "/" + day_week_month_year_all;
+                    var thisPost = this;
+                    
+                    $.ajax({
+                        url: thisPost.url,
+                        type: 'GET',
+                        headers: {
+                            Authorization: thisPost.auth,
+                        },
+                        success: function(results) {
+                            thisPost.attributes = results;
+                            current_gif_number = 0;
+                            order_arr = thisPost.shuffle(thisPost.max_post);
+                            thisPost.render(results); 
+                        } 
+                    }) 
+                   
+                    historical_obj_of_gif_posts.push(this);
+                    
+                },//end of initialize
+                
+                render: function(results) {
+                    //check if the mp4 key exists in the data. Some gifs don't have a mp4 available. Delete all the values in the array that doesn't have a mp4 data.
+                    //console.log("results is : " + results.data[order_arr[current_gif_number]]["mp4"]);
+                    
+                    if (order_arr.length <= current_gif_number) {
+                        $('#gif').text('You watched all the GIFs!');
+                    } else {
+                        while (!("mp4" in results["data"][order_arr[current_gif_number]])) {
+                            order_arr.splice(current_gif_number, 1);
+                        } 
+                        console.log("order_arr length is: " + order_arr.length);
+                        console.log("current gif number is: " + current_gif_number);
+                         {
+                            $('#gif').html($('<div align="center" class="embed-responsive embed-responsive-16by9"><video class="center-block embed-responsive-item" id="mp4-video" autoplay loop><source src="' + results["data"][order_arr[current_gif_number]]["mp4"] + '" type="video/mp4"></video></div>'))
+                        }
+                    }
+                }, //end of render
+                    
+                shuffle : function(max_gifs) {
+                    
+                    for (var arr_order_of_gifs=[],i=0;i<max_gifs;i++) {
+                        arr_order_of_gifs[i]=i;
+                    }
+                    
+                    var tmp, 
+                    current, 
+                    top = arr_order_of_gifs.length;
+                    if(top) {
+                        while(--top) {
+                            current = Math.floor(Math.random() * (top + 1));
+                            tmp = arr_order_of_gifs[current];
+                            arr_order_of_gifs[current] = arr_order_of_gifs[top];
+                            arr_order_of_gifs[top] = tmp;
+                        }
+                    }
+                    return arr_order_of_gifs;
+                }, //end of shuffle
+                    
+                auth: "Client-ID 4784e8f3cbbc8cf"
+                
+            };
+            
+            post_gifs.initialize("top", "all");
           
+            console.log(historical_obj_of_gif_posts[0]);
             
+            $('#moar-button').click(function(event) {
+                event.preventDefault();
+                current_gif_number++;
+                //console.log("array is : " + order_arr);
+//                console.log("number at array is: " + order_arr[current_gif_number]);
+                post_gifs["render"](historical_obj_of_gif_posts[0].attributes);
+            });
             
-            
-            
+            $('#back-button').click(function(event) {
+                event.preventDefault();
+                current_gif_number--;
+                post_gifs["render"](historical_obj_of_gif_posts[0].attributes);
+            });
             
         </script>
 
