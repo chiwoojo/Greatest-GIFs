@@ -11,3 +11,28 @@
 #mainContainer {
     padding-top: 120px;
 }
+
+
+body {
+	background-color: #BFFFE3;
+	border-color: #BFFFE3;
+}
+
+.navbar {
+	background-color: #AEE8BE;
+	border-color: #AEE8BE;
+}
+
+/*.well {
+	background-color: #CCFFCC;
+	border-color: #CCFFCC;
+}*/
+
+.thumbnail {
+	background-color: black;
+	border-color: black;
+}
+
+* {
+	font-family: 'Ruda', sans-serif;
+}

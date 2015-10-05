@@ -3,43 +3,31 @@
     <head>
         <meta charset="UTF-8">
         <title>GIFs!</title>
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">       
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
         <link rel="stylesheet" href="css/main.css">
+        <link href='https://fonts.googleapis.com/css?family=Lora|Ruda' rel='stylesheet' type='text/css'>
     </head>
 
     <body>
         <!--  Full-width Navigation -->
         <nav class="navbar navbar-default navbar-fixed-top" id="topNav">
-            <div class="container-fluid">
-                <a href="index.html" class="navbar-brand">
-                    GIF - TV
-                </a>
-<!-- Deleted to have a cleaner interface
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="">1</a></li>
-                    <li><a href="">2</a></li>
-                    <li><a href="">3</a></li>
-                </ul>
--->
-            </div>
+            <a href="index.html" class="navbar-brand">
+                GIF.tv
+            </a>
+            <ul class="nav navbar-nav">
+                <li><a href="http://portfolio-page.divshot.io/">
+                    by Vincent Jo
+                </a></li>
+            </ul>
         </nav>
+        <!-- End of Navigation -->
 
         <!-- Main Content Container -->
         <div class="container" id="mainContainer">
 
-            <!--  Title Row  -->
-<!--       Deleted for a cleaner interface
-            <div class="row">
-                <div class="col-sm-12">
-                    <h1>1</h1>
-                    <p>Title for gif number</p>
-                </div>
-            </div>
--->
-            
-            <!-- Content (Where GIF is) Row  -->
+            <!-- Well where GIF and comments sit -->
             <div class="row well">
-                <!--gif-->
+                <!-- gif-video -->
                 <div class="col-sm-7">
                     <div class="thumbnail" id="gif">
                     <!--     jQuery is going to append GIFs here       -->
@@ -47,172 +35,74 @@
                 </div>
                 <!--comments-->
                 <div class="col-sm-5">
-                    <h3>
-                        Funniest Comment
+                    <h3 id="title-of-gif">
+                        Loading...
                     </h3>
-                    <p>"What the..."</p>
+                    <p id="num-one-comment"></p>
+                    <p id="num-two-comment"></p>
+                    <p id="num-three-comment"></p>
                 </div>
-            </div>
-
-
-
+            </div> 
+            <!-- end of Well -->
+            
+            <!-- Buttons and GIF source line -->
             <div class="row">
-
                 <div class="col-sm-4 col-xs-6">
                     <button type="button" class="btn btn-primary" id="back-button">BACK!</button>
                     <button type="button" class="btn btn-info" id="moar-button">MOAR!</button>
-                    <input type="button" value="Like">   
-                    <input type="button" value="Neutral">
-                    <input type="button" value="Dislike">
-                    
                 </div>
-
                 <div class="col-sm-4 col-xs-6">
-                    <h3>
-                        Source
-                    </h3>
-                    <p><a href="http://www.reddit.com/">Reddit</a></p>
+                    <p><a href="http://www.reddit.com/" id="source-of-gif">Imgur - source</a></p>
                 </div>
-
-                <div class="col-sm-4 col-xs-12  col-sm-offset-0">
-                    <h3>
-                        Lorem ipsum dolor sit amet, consectetur----
-                    </h3>
-                    <p>description for heading 3</p>
-                </div>
-
             </div>    
+            <!-- end of Buttons and GIF source -->
 
-
-
+            <!-- Footer -->
             <div class="footer">
                 <div class="container">
                     <div class="row">
-                        <div class="col-sm-12">
+                        <div class="col-sm-12 text-right">
                             <p>
-                                Curated by Vincent Jo
+                                Created by Vincent Jo
                             </p>
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- End of Footer -->
 
         </div>
+        <!-- End of Main Container for Content -->
 
         <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
-
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha256-Sk3nkD6mLTMOF0EOpNtsIry+s1CsaqQC1rVLTAy+0yc= sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
         
         <script>
-            /*
-                    This JS file pulls data from Imgur API and appends information onto index.HTML
-            */
-            
-            // http://stackoverflow.com/questions/962802#962890
-
-            //put into array [1,2,3,4,...so on until the last number]
-            
-            
-            /*
-            
-            
-            for (var arr_order_of_gifs=[],i=0;i<60;i++) {
-                arr_order_of_gifs[i]=i;
-            }
-
-            function shuffle(array) {
-                var tmp, 
-                    current, 
-                    top = array.length;
-
-                if(top) {
-
-                    while(--top) {
-                        current = Math.floor(Math.random() * (top + 1));
-                        tmp = array[current];
-                        array[current] = array[top];
-                        array[top] = tmp;
-                    }
-
-                }
-                return array;
-            }
-
-            arr_order_of_gifs = shuffle(arr_order_of_gifs);
-            
-            
-            data_results = {};
-            
-            var clientId = "4784e8f3cbbc8cf";
-            var auth="Client-ID " + clientId;
-            
-            $.ajax({
-                url: 'https://api.imgur.com/3/gallery/r/gifs/top/week',
-                type: 'GET',
-                headers: {
-                    Authorization: auth,
-                },
-                success: function(results) { append_gif(results); console.log(results);}
-            });
-      
-            
-            var append_gif = function(results) {
-//                $('#gif').append($('<video class="center-block" id="mp4-video" autoplay><source src="' + results["data"]["15"]["mp4"] + '" type="video/mp4"></video>'));
-//                $('#gif').append($('<img>').attr('src', results["data"]["12"]["link"]));
-               
-               
-                
-                //Responsive MP4 idea from StackOverflow : http://stackoverflow.com/questions/26040136/bootstrap-3-responsive-mp4-video 
-                
-                //Math.random idea from: http://stackoverflow.com/questions/1527803/generating-random-numbers-in-javascript-in-a-specific-range
-                
-                
-                
-                //check if the mp4 key exists in the data. Some gifs don't have a mp4 available. Delete all the values in the array that doesn't have a mp4 data.
-                while (!("mp4" in results["data"][arr_order_of_gifs[0]])) {
-                    arr_order_of_gifs.shift();
-                } 
-               
-                console.log(arr_order_of_gifs);
-                $('#gif').html($('<div align="center" class="embed-responsive embed-responsive-16by9"><video class="center-block embed-responsive-item" id="mp4-video" autoplay loop><source src="' + results["data"][arr_order_of_gifs.shift()]["mp4"] + '" type="video/mp4"></video></div>'));  
-                    
-                
-            }
-            
-            //on click, load more, but only load ones that haven't been played.
-            $('#moar-button').click(function(event) {
-                
-                event.preventDefault();
-                
-                if (arr_order_of_gifs.length === 0) {
-                    $('#gif').text('You watched all the GIFs!');
-                } else {
-                    $.ajax({
-                        url: 'https://api.imgur.com/3/gallery/r/gifs/top/week',
-                        type: 'GET',
-                        headers: {
-                            Authorization: auth,
-                        },
-                        success: function(results) { append_gif(results); console.log(results);},
-             
-                    });
-                }
-                
-            });
-            
-            */
-            
-            
-            
-            var order_arr = [1];
+            var order_arr = [];
             var current_gif_number = 0;
             var historical_obj_of_gif_posts = [];
             
             var post_gifs = {
                 url: 'https://api.imgur.com/3/gallery/r/gifs/',
-                max_post: 40,
-                initialize: function(hot_top_user, day_week_month_year_all) {
-                    this.url += hot_top_user + "/" + day_week_month_year_all;
+                auth: "Client-ID 4784e8f3cbbc8cf",
+                max_post: 60,
+                current_gif_number: 0,
+                order_arr: [],
+
+                /*    initiate GIF.tv
+                      
+                This function 
+                1) grabs the first GIF by using Imgur's API
+                2) gets the shuffled array 
+                3) and renders the results onto the HTML
+
+                @ param ranked by (hot|top|user) 
+                @ param time period (day|week|month|year|all)
+                @ param number of gifs to display (range 0-60)
+                */
+                initialize: function(rank_by, time_period, num_to_display) {
+                    this.max_post = num_to_display;
+                    this.url += rank_by + "/" + time_period;
                     var thisPost = this;
                     
                     $.ajax({
@@ -223,8 +113,8 @@
                         },
                         success: function(results) {
                             thisPost.attributes = results;
-                            current_gif_number = 0;
-                            order_arr = thisPost.shuffle(thisPost.max_post);
+                            thisPost.current_gif_number = 0;
+                            thisPost.order_arr = thisPost.shuffle(thisPost.max_post);
                             thisPost.render(results); 
                         } 
                     }) 
@@ -232,26 +122,89 @@
                     historical_obj_of_gif_posts.push(this);
                     
                 },//end of initialize
+
                 
-                render: function(results) {
-                    //check if the mp4 key exists in the data. Some gifs don't have a mp4 available. Delete all the values in the array that doesn't have a mp4 data.
-                    //console.log("results is : " + results.data[order_arr[current_gif_number]]["mp4"]);
-                    
-                    if (order_arr.length <= current_gif_number) {
-                        $('#gif').text('You watched all the GIFs!');
-                    } else {
-                        while (!("mp4" in results["data"][order_arr[current_gif_number]])) {
-                            order_arr.splice(current_gif_number, 1);
+                render: 
+                    /**
+                     *
+                     * This function takes the results of the API call and renders it on the HTML
+                     * 
+                     * @param  {Object} 
+                     * @return {undefined}
+                     */
+                    function(results) {
+
+                    //loading comments signal
+                    $('#num-one-comment').empty();
+                    $('#num-two-comment').empty();
+                    $('#num-three-comment').empty();
+
+                    //if you reached the end of all gifs in the array, send message
+                    if 
+                        (this.order_arr.length <= this.current_gif_number) 
+                    {
+                        $('#gif').html('<img src="http://i.giphy.com/M6hgceLnI2uJi.gif">');
+                        $('#title-of-gif').text('Sorry, no more GIFs available...');
+                        $('#num-one-comment').empty();
+                        $('#num-two-comment').empty();
+                        $('#num-three-comment').empty();
+                    } 
+                        else 
+                    {
+                        //render the title right next to the video
+                        $('#title-of-gif').text(results["data"][this.order_arr[this.current_gif_number]]["title"]);
+
+                        //render the source link
+                        $('#source-of-gif').attr('href',"https://imgur.com/" +results["data"][this.order_arr[this.current_gif_number]]["id"]);
+
+                        //checks if a mp4 link is available, and if not cuts the array
+                        while (!("mp4" in results["data"][this.order_arr[this.current_gif_number]])) {
+                            this.order_arr.splice(this.current_gif_number, 1);
                         } 
-                        console.log("order_arr length is: " + order_arr.length);
-                        console.log("current gif number is: " + current_gif_number);
-                         {
-                            $('#gif').html($('<div align="center" class="embed-responsive embed-responsive-16by9"><video class="center-block embed-responsive-item" id="mp4-video" autoplay loop><source src="' + results["data"][order_arr[current_gif_number]]["mp4"] + '" type="video/mp4"></video></div>'))
-                        }
+                        console.log("order_arr length is: " + this.order_arr.length);
+                        console.log("current gif number is: " + this.current_gif_number);
+                        
+                        //embed GIF 
+                        $('#gif').html($('<div align="center" class="embed-responsive embed-responsive-16by9"><video class="center-block embed-responsive-item" id="mp4-video" autoplay loop><source src="' + results["data"][this.order_arr[this.current_gif_number]]["mp4"] + '" type="video/mp4"></video></div>'))
+
+                        //add top comments
+                        $.ajax({
+                            url: "https://api.imgur.com/3/gallery/image/" + results["data"][this.order_arr[this.current_gif_number]]["id"] + "/comments/top",
+                            type: 'GET',
+                            headers: {
+                                Authorization: this.auth
+                            },
+                            success: function(results) {
+                                console.log(results);
+                                $('#num-one-comment').text('"' + results["data"][0]["comment"] + '"');
+                                $('#num-two-comment').text('"' + results["data"][1]["comment"] + '"');
+                                $('#num-three-comment').text('"' + results["data"][2]["comment"] + '"');
+                            },
+
+                            error: function() {
+                                $('#num-one-comment').text('Sorry, no comments available...');
+                                $('#num-two-comment').empty();
+                                $('#num-three-comment').empty();
+                            }
+                        });
                     }
+
                 }, //end of render
                     
-                shuffle : function(max_gifs) {
+                shuffle : 
+                    /**
+                     *
+                     * This function takes a number and returns an array that is randomized, 
+                     * with no repeat numbers of the number length. 
+                     *
+                     * @example
+                     *     num = 5
+                     *     return = [1,4,3,2,5]
+                     * 
+                     * @param  {number}
+                     * @return {array}
+                     */
+                    function(max_gifs) {
                     
                     for (var arr_order_of_gifs=[],i=0;i<max_gifs;i++) {
                         arr_order_of_gifs[i]=i;
@@ -269,30 +222,40 @@
                         }
                     }
                     return arr_order_of_gifs;
-                }, //end of shuffle
-                    
-                auth: "Client-ID 4784e8f3cbbc8cf"
+                } //end of shuffle
+             
                 
             };
             
-            post_gifs.initialize("top", "all");
-          
-            console.log(historical_obj_of_gif_posts[0]);
+            //intialize app        
+            post_gifs.initialize("day", "hot", 60);
             
+            //when MOAR! is clicked...
             $('#moar-button').click(function(event) {
                 event.preventDefault();
-                current_gif_number++;
-                //console.log("array is : " + order_arr);
-//                console.log("number at array is: " + order_arr[current_gif_number]);
+                historical_obj_of_gif_posts[0].current_gif_number++;
+
+                //setting a maximum for current_gif_number to order_arr.length
+                if (historical_obj_of_gif_posts[0].current_gif_number >= historical_obj_of_gif_posts[0].order_arr.length) {
+                    historical_obj_of_gif_posts[0].current_gif_number = historical_obj_of_gif_posts[0].order_arr.length;
+                }
+
                 post_gifs["render"](historical_obj_of_gif_posts[0].attributes);
             });
-            
+
+            //when BACK! is clicked...
             $('#back-button').click(function(event) {
                 event.preventDefault();
-                current_gif_number--;
+                historical_obj_of_gif_posts[0].current_gif_number--;
+
+                //setting a minimum for current_gif_number to 0
+                if (historical_obj_of_gif_posts[0].current_gif_number < 0) {
+                    historical_obj_of_gif_posts[0].current_gif_number = 0;
+                }
+
                 post_gifs["render"](historical_obj_of_gif_posts[0].attributes);
             });
-            
+
         </script>
 
     </body>
