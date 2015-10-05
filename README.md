@@ -1,5 +1,5 @@
 # Greatest-GIFs
-This website shows the greatest GIFs I found on various sites throughout today on Reddit's /r/GIF subreddit.
+This website shows the hottest GIFs on Reddit's /r/GIF subreddit for today.
 
 ![greatest-gif preview](https://cloud.githubusercontent.com/assets/13400593/10292878/7c8803c6-6b66-11e5-9b23-cdaac1faeba7.png)
 
